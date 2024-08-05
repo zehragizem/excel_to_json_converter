@@ -20,13 +20,13 @@ namespace exceltojson
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Excel Files|*.xlsx";
-            openFileDialog1.Title = "Excel dosyasını seçin";
+            openFileDialog1.Title = "Excel dosyasÃ½nÃ½ seÃ§in";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog1.FileName;
 
-                // Dosya yolunu TextBox'a yazdırın
+                // Dosya yolunu TextBox'a yazdÃ½rÃ½n
                 textBox1.Text = filePath;
             }
         }
@@ -35,66 +35,66 @@ namespace exceltojson
         private void button2_Click(object sender, EventArgs e)
         {
             // Dictionaries for both tables
-            var rowHeadersKalkış = new Dictionary<string, List<int>>
+            var rowHeadersKalkÃ½Ã¾ = new Dictionary<string, List<int>>
         {
-            { "Önceki servis / Previous service ", new List<int>() },
-            { "Açıklamalar / Remarks ", new List<int>() },
-            { "Varış noktası / Destination Codes  ", new List<int>() },
+            { "Ã–nceki servis / Previous service ", new List<int>() },
+            { "AÃ§Ã½klamalar / Remarks ", new List<int>() },
+            { "VarÃ½Ã¾ noktasÃ½ / Destination Codes  ", new List<int>() },
             { "Hat-sefer-trip / Line-run-trip ", new List<int>() },
             { "Sonraki servis / Next service", new List<int>() },
-            { "Açıklamalar / Remarks", new List<int>() },
+            { "AÃ§Ã½klamalar / Remarks", new List<int>() },
         };
-            var resultsRowKalkış = new Dictionary<string, List<string>>
+            var resultsRowKalkÃ½Ã¾ = new Dictionary<string, List<string>>
         {
-            { "Önceki servis / Previous service ", new List<string>() },
-            { "Açıklamalar / Remarks ", new List<string>() },
-            { "Varış noktası / Destination Codes  ", new List<string>() },
+            { "Ã–nceki servis / Previous service ", new List<string>() },
+            { "AÃ§Ã½klamalar / Remarks ", new List<string>() },
+            { "VarÃ½Ã¾ noktasÃ½ / Destination Codes  ", new List<string>() },
             { "Hat-sefer-trip / Line-run-trip ", new List<string>() },
             { "Sonraki servis / Next service", new List<string>() },
-            { "Açıklamalar / Remarks", new List<string>() },
+            { "AÃ§Ã½klamalar / Remarks", new List<string>() },
         };
 
-            var rowHeadersVarış = new Dictionary<string, List<int>>
+            var rowHeadersVarÃ½Ã¾ = new Dictionary<string, List<int>>
         {
-            { "Önceki servis / Previous service ", new List<int>() },
-            { "Açıklamalar / Remarks ", new List<int>() },
-            { "Varış noktası / Destination Codes  ", new List<int>() },
+            { "Ã–nceki servis / Previous service ", new List<int>() },
+            { "AÃ§Ã½klamalar / Remarks ", new List<int>() },
+            { "VarÃ½Ã¾ noktasÃ½ / Destination Codes  ", new List<int>() },
             { "Hat-sefer-trip / Line-run-trip ", new List<int>() },
             { "Sonraki servis / Next service", new List<int>() },
-            { "Açıklamalar / Remarks", new List<int>() },
+            { "AÃ§Ã½klamalar / Remarks", new List<int>() },
         };
-            var resultsRowVarış = new Dictionary<string, List<string>>
+            var resultsRowVarÃ½Ã¾ = new Dictionary<string, List<string>>
         {
-            { "Önceki servis / Previous service ", new List<string>() },
-            { "Açıklamalar / Remarks ", new List<string>() },
-            { "Varış noktası / Destination Codes  ", new List<string>() },
+            { "Ã–nceki servis / Previous service ", new List<string>() },
+            { "AÃ§Ã½klamalar / Remarks ", new List<string>() },
+            { "VarÃ½Ã¾ noktasÃ½ / Destination Codes  ", new List<string>() },
             { "Hat-sefer-trip / Line-run-trip ", new List<string>() },
             { "Sonraki servis / Next service", new List<string>() },
-            { "Açıklamalar / Remarks", new List<string>() },
+            { "AÃ§Ã½klamalar / Remarks", new List<string>() },
         };
 
-            var resultsKalkış = new Dictionary<string, List<string>>
+            var resultsKalkÃ½Ã¾ = new Dictionary<string, List<string>>
         {
             { "km", new List<string>() },
-            { "İstasyonlar / Stations", new List<string>() },
-            { "İst. Arası Yolculuk Süresi", new List<string>() },
-            { "İstasyon Bekleme Süreleri", new List<string>() },
-            { "Toplam Yolculuk Süresi", new List<string>() },
-            { "kalkış", new List<string>() },
+            { "Ãstasyonlar / Stations", new List<string>() },
+            { "Ãst. ArasÃ½ Yolculuk SÃ¼resi", new List<string>() },
+            { "Ãstasyon Bekleme SÃ¼releri", new List<string>() },
+            { "Toplam Yolculuk SÃ¼resi", new List<string>() },
+            { "kalkÃ½Ã¾", new List<string>() },
         };
 
-            var resultsVarış = new Dictionary<string, List<string>>
+            var resultsVarÃ½Ã¾ = new Dictionary<string, List<string>>
         {
             { "km", new List<string>() },
-            { "İstasyonlar / Stations", new List<string>() },
-            { "İst. Arası Yolculuk Süresi", new List<string>() },
-            { "İstasyon Bekleme Süreleri", new List<string>() },
-            { "Toplam Yolculuk Süresi", new List<string>() },
-            { "varış", new List<string>() },
+            { "Ãstasyonlar / Stations", new List<string>() },
+            { "Ãst. ArasÃ½ Yolculuk SÃ¼resi", new List<string>() },
+            { "Ãstasyon Bekleme SÃ¼releri", new List<string>() },
+            { "Toplam Yolculuk SÃ¼resi", new List<string>() },
+            { "varÃ½Ã¾", new List<string>() },
         };
 
-            var kalkışListesi = new List<List<string>>();
-            var varışListesi = new List<List<string>>();
+            var kalkÃ½Ã¾Listesi = new List<List<string>>();
+            var varÃ½Ã¾Listesi = new List<List<string>>();
 
 
             try
@@ -102,38 +102,38 @@ namespace exceltojson
                 if (ProcessExcelFile(filePath))
                 {
 
-                    UpdateHeaderPositions(filePath, rowHeadersKalkış, rowHeadersVarış);
+                    UpdateHeaderPositions(filePath, rowHeadersKalkÃ½Ã¾, rowHeadersVarÃ½Ã¾);
                     int firstKmHeaderRow, firstKmHeaderCol;
                     int secondKmHeaderRow, secondKmHeaderCol;
                     FindKmHeaderPositions(filePath, out firstKmHeaderRow, out firstKmHeaderCol, out secondKmHeaderRow, out secondKmHeaderCol);
-                    ReadAndDisplayRowData(filePath, rowHeadersKalkış, resultsRowKalkış);
-                    ReadAndDisplayRowData(filePath, rowHeadersVarış, resultsRowVarış);
-                    ReadAndDisplayColumnData(filePath, resultsKalkış, kalkışListesi, resultsVarış, varışListesi);
+                    ReadAndDisplayRowData(filePath, rowHeadersKalkÃ½Ã¾, resultsRowKalkÃ½Ã¾);
+                    ReadAndDisplayRowData(filePath, rowHeadersVarÃ½Ã¾, resultsRowVarÃ½Ã¾);
+                    ReadAndDisplayColumnData(filePath, resultsKalkÃ½Ã¾, kalkÃ½Ã¾Listesi, resultsVarÃ½Ã¾, varÃ½Ã¾Listesi);
                     // Check if any of the lists are null or empty
-                    bool isAnyListEmpty = kalkışListesi == null || varışListesi == null ||
-                                          resultsRowKalkış == null || resultsRowVarış == null ||
-                                          resultsKalkış == null || resultsVarış == null ||
-                                          !kalkışListesi.Any() || !varışListesi.Any() ||
-                                          !resultsRowKalkış.Any() || !resultsRowVarış.Any() ||
-                                          !resultsKalkış.Any() || !resultsVarış.Any();
+                    bool isAnyListEmpty = kalkÃ½Ã¾Listesi == null || varÃ½Ã¾Listesi == null ||
+                                          resultsRowKalkÃ½Ã¾ == null || resultsRowVarÃ½Ã¾ == null ||
+                                          resultsKalkÃ½Ã¾ == null || resultsVarÃ½Ã¾ == null ||
+                                          !kalkÃ½Ã¾Listesi.Any() || !varÃ½Ã¾Listesi.Any() ||
+                                          !resultsRowKalkÃ½Ã¾.Any() || !resultsRowVarÃ½Ã¾.Any() ||
+                                          !resultsKalkÃ½Ã¾.Any() || !resultsVarÃ½Ã¾.Any();
 
                     if (isAnyListEmpty)
                     {
-                        MessageBox.Show("Bu Excel uygun formatta değil.");
-                        textBox1.Text = ""; // TextBox'ı temizler
+                        MessageBox.Show("Bu Excel uygun formatta deÃ°il.");
+                        textBox1.Text = ""; // TextBox'Ã½ temizler
                         return; // Exit the method or process if the format is not correct
                     }
                     else
                     {
-                        var myClassKalkış = new MyClass(); // Initialize for kalkış
-                        var myClassVarış = new MyClass(); // Initialize for varış
-                        var (counter_kalkis, items_kalkis) = countList(kalkışListesi);
-                        var (counter_varis, items_varis) = countList(varışListesi);
+                        var myClassKalkÃ½Ã¾ = new MyClass(); // Initialize for kalkÃ½Ã¾
+                        var myClassVarÃ½Ã¾ = new MyClass(); // Initialize for varÃ½Ã¾
+                        var (counter_kalkis, items_kalkis) = countList(kalkÃ½Ã¾Listesi);
+                        var (counter_varis, items_varis) = countList(varÃ½Ã¾Listesi);
 
-                        var result_kalkis = setJson(resultsKalkış, "kalkış", myClassKalkış, items_kalkis, kalkışListesi, resultsRowKalkış, counter_kalkis);
+                        var result_kalkis = setJson(resultsKalkÃ½Ã¾, "kalkÃ½Ã¾", myClassKalkÃ½Ã¾, items_kalkis, kalkÃ½Ã¾Listesi, resultsRowKalkÃ½Ã¾, counter_kalkis);
                         string json_kalkis = JsonConvert.SerializeObject(result_kalkis, Formatting.Indented);
 
-                        var result_varis = setJson(resultsVarış, "varış", myClassVarış, items_varis, varışListesi, resultsRowVarış, counter_varis);
+                        var result_varis = setJson(resultsVarÃ½Ã¾, "varÃ½Ã¾", myClassVarÃ½Ã¾, items_varis, varÃ½Ã¾Listesi, resultsRowVarÃ½Ã¾, counter_varis);
                         string json_varis = JsonConvert.SerializeObject(result_varis, Formatting.Indented);
 
                         // Save JSON files using SaveFileDialog
@@ -143,7 +143,7 @@ namespace exceltojson
                             Title = "Save JSON File"
                         };
 
-                        // Save kalkış JSON
+                        // Save kalkÃ½Ã¾ JSON
                         saveFileDialog.FileName = "results_kalkis.json";
                         if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
@@ -153,11 +153,11 @@ namespace exceltojson
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Kalkış JSON dosyası kaydedilirken bir hata oluştu: {ex.Message}");
+                                MessageBox.Show($"KalkÃ½Ã¾ JSON dosyasÃ½ kaydedilirken bir hata oluÃ¾tu: {ex.Message}");
                             }
                         }
 
-                        // Save varış JSON
+                        // Save varÃ½Ã¾ JSON
                         saveFileDialog.FileName = "results_varis.json";
                         if (saveFileDialog.ShowDialog() == DialogResult.OK)
                         {
@@ -167,11 +167,11 @@ namespace exceltojson
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Varış JSON dosyası kaydedilirken bir hata oluştu: {ex.Message}");
+                                MessageBox.Show($"VarÃ½Ã¾ JSON dosyasÃ½ kaydedilirken bir hata oluÃ¾tu: {ex.Message}");
                             }
                         }
-                        MessageBox.Show("Dosyalar başarıyla oluşturuldu");
-                        textBox1.Text = ""; // TextBox'ı temizler
+                        MessageBox.Show("Dosyalar baÃ¾arÃ½yla oluÃ¾turuldu");
+                        textBox1.Text = ""; // TextBox'Ã½ temizler
                     }
                 }
                  
@@ -215,23 +215,23 @@ namespace exceltojson
 
         void PromptUserToSelectFile()
         {
-            MessageBox.Show("Lütfen bir Excel dosyası seçin.");
+            MessageBox.Show("LÃ¼tfen bir Excel dosyasÃ½ seÃ§in.");
             openFileDialog1.Filter = "Excel Files|*.xlsx";
-            openFileDialog1.Title = "Excel dosyasını seçin";
+            openFileDialog1.Title = "Excel dosyasÃ½nÃ½ seÃ§in";
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog1.FileName;
 
-                // Dosya yolunu TextBox'a yazdırın
+                // Dosya yolunu TextBox'a yazdÃ½rÃ½n
                 textBox1.Text = filePath;
             }
         }
 
         void ShowInvalidFileTypeMessage()
         {
-            MessageBox.Show("Geçersiz dosya türü. Lütfen bir Excel dosyası seçin.");
-            textBox1.Text = ""; // TextBox'ı temizler
+            MessageBox.Show("GeÃ§ersiz dosya tÃ¼rÃ¼. LÃ¼tfen bir Excel dosyasÃ½ seÃ§in.");
+            textBox1.Text = ""; // TextBox'Ã½ temizler
         }
 
         void ResetFilePath()
@@ -246,8 +246,8 @@ namespace exceltojson
 
         void ShowEmptyWorksheetMessage()
         {
-            MessageBox.Show("Bu Excel dosyası boş.");
-            textBox1.Text = ""; // TextBox'ı temizler
+            MessageBox.Show("Bu Excel dosyasÃ½ boÃ¾.");
+            textBox1.Text = ""; // TextBox'Ã½ temizler
         }
 
         static ResultsCombine setJson(Dictionary<string, List<string>> results, string result_key, MyClass myClass, int items, List<List<string>> liste, Dictionary<string, List<string>> resultsRow, int counter)
@@ -264,16 +264,16 @@ namespace exceltojson
                         case "km":
                             myClass.Km = string.Join(", ", result.Value);
                             break;
-                        case "İstasyonlar / Stations":
+                        case "Ãstasyonlar / Stations":
                             myClass.Istasyon = string.Join(", ", result.Value);
                             break;
-                        case "İst. Arası Yolculuk Süresi":
+                        case "Ãst. ArasÃ½ Yolculuk SÃ¼resi":
                             myClass.IstasyonArasiYolculuk = string.Join(", ", result.Value);
                             break;
-                        case "İstasyon Bekleme Süreleri":
+                        case "Ãstasyon Bekleme SÃ¼releri":
                             myClass.IstasyonBeklemeSuresi = string.Join(", ", result.Value);
                             break;
-                        case "Toplam Yolculuk Süresi":
+                        case "Toplam Yolculuk SÃ¼resi":
                             myClass.ToplamYolculukSuresi = string.Join(", ", result.Value);
                             break;
                     }
@@ -291,8 +291,8 @@ namespace exceltojson
                 {
                     if (subList.Count > i)
                     {
-                        var kalkış = subList[i];
-                        var myListItem = new MyList { Saat = kalkış };
+                        var kalkÃ½Ã¾ = subList[i];
+                        var myListItem = new MyList { Saat = kalkÃ½Ã¾ };
 
                         foreach (var rowResult in resultsRow)
                         {
@@ -300,14 +300,14 @@ namespace exceltojson
                             {
                                 switch (rowResult.Key)
                                 {
-                                    case "Önceki servis / Previous service ":
-                                        myListItem.ÖncekiServis = rowResult.Value[index];
+                                    case "Ã–nceki servis / Previous service ":
+                                        myListItem.Ã–ncekiServis = rowResult.Value[index];
                                         break;
-                                    case "Açıklamalar / Remarks ":
-                                        myListItem.Açıklama = rowResult.Value[index];
+                                    case "AÃ§Ã½klamalar / Remarks ":
+                                        myListItem.AÃ§Ã½klama = rowResult.Value[index];
                                         break;
-                                    case "Varış noktası / Destination Codes  ":
-                                        myListItem.VarışNoktası = rowResult.Value[index];
+                                    case "VarÃ½Ã¾ noktasÃ½ / Destination Codes  ":
+                                        myListItem.VarÃ½Ã¾NoktasÃ½ = rowResult.Value[index];
                                         break;
                                     case "Hat-sefer-trip / Line-run-trip ":
                                         myListItem.HatSefer = rowResult.Value[index];
@@ -361,9 +361,9 @@ namespace exceltojson
                     var myListItem = new MyList // Assuming MyList is a class
                     {
                         Saat = firstItem.Saat,
-                        ÖncekiServis = firstItem.ÖncekiServis,
-                        Açıklama = firstItem.Açıklama,
-                        VarışNoktası = firstItem.VarışNoktası,
+                        Ã–ncekiServis = firstItem.Ã–ncekiServis,
+                        AÃ§Ã½klama = firstItem.AÃ§Ã½klama,
+                        VarÃ½Ã¾NoktasÃ½ = firstItem.VarÃ½Ã¾NoktasÃ½,
                         HatSefer = firstItem.HatSefer,
                         SonrakiSefer = firstItem.SonrakiSefer
                     };
@@ -381,7 +381,7 @@ namespace exceltojson
         }
 
 
-        static void UpdateHeaderPositions(string filePath, Dictionary<string, List<int>> rowHeadersKalkış, Dictionary<string, List<int>> rowHeadersVarış)
+        static void UpdateHeaderPositions(string filePath, Dictionary<string, List<int>> rowHeadersKalkÃ½Ã¾, Dictionary<string, List<int>> rowHeadersVarÃ½Ã¾)
         {
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
@@ -399,25 +399,25 @@ namespace exceltojson
                         {
                             string cellValue = worksheet.Cells[row, col].Text;
 
-                            // Update positions for 'kalkış' headers
-                            if (rowHeadersKalkış.ContainsKey(cellValue) && rowHeadersKalkış[cellValue].Count == 0)
+                            // Update positions for 'kalkÃ½Ã¾' headers
+                            if (rowHeadersKalkÃ½Ã¾.ContainsKey(cellValue) && rowHeadersKalkÃ½Ã¾[cellValue].Count == 0)
                             {
-                                rowHeadersKalkış[cellValue].Add(row);
-                                rowHeadersKalkış[cellValue].Add(col);
+                                rowHeadersKalkÃ½Ã¾[cellValue].Add(row);
+                                rowHeadersKalkÃ½Ã¾[cellValue].Add(col);
                             }
 
                             // If first table end is not yet found, mark it and switch to second table headers
-                            if (rowHeadersKalkış.Values.All(v => v.Count > 1) && !foundFirstTableEnd)
+                            if (rowHeadersKalkÃ½Ã¾.Values.All(v => v.Count > 1) && !foundFirstTableEnd)
                             {
                                 firstTableEndRow = row;
                                 foundFirstTableEnd = true;
                             }
 
-                            // Update positions for 'varış' headers only after the end of the first table
-                            if (foundFirstTableEnd && rowHeadersVarış.ContainsKey(cellValue) && rowHeadersVarış[cellValue].Count == 0)
+                            // Update positions for 'varÃ½Ã¾' headers only after the end of the first table
+                            if (foundFirstTableEnd && rowHeadersVarÃ½Ã¾.ContainsKey(cellValue) && rowHeadersVarÃ½Ã¾[cellValue].Count == 0)
                             {
-                                rowHeadersVarış[cellValue].Add(row);
-                                rowHeadersVarış[cellValue].Add(col);
+                                rowHeadersVarÃ½Ã¾[cellValue].Add(row);
+                                rowHeadersVarÃ½Ã¾[cellValue].Add(col);
                             }
                        
                     }
@@ -492,7 +492,7 @@ namespace exceltojson
             {
                 var worksheet = package.Workbook.Worksheets[0];
 
-                // Process kalkış table
+                // Process kalkÃ½Ã¾ table
                 foreach (var header in rowHeaders)
                 {
                     if (header.Value.Count == 2)
@@ -509,7 +509,7 @@ namespace exceltojson
                             targetCol++;
                         }
 
-                        Console.WriteLine($"Processed kalkış header: {header.Key}");
+                        Console.WriteLine($"Processed kalkÃ½Ã¾ header: {header.Key}");
                     }
                 }
 
@@ -531,8 +531,8 @@ namespace exceltojson
         }
 
         static void ReadAndDisplayColumnData(string filePath,
-            Dictionary<string, List<string>> resultsKalkış, List<List<string>> kalkışListesi,
-            Dictionary<string, List<string>> resultsVarış, List<List<string>> varışListesi)
+            Dictionary<string, List<string>> resultsKalkÃ½Ã¾, List<List<string>> kalkÃ½Ã¾Listesi,
+            Dictionary<string, List<string>> resultsVarÃ½Ã¾, List<List<string>> varÃ½Ã¾Listesi)
         {
             int firstKmHeaderRow, firstKmHeaderCol, secondKmHeaderRow, secondKmHeaderCol;
             FindKmHeaderPositions(filePath, out firstKmHeaderRow, out firstKmHeaderCol, out secondKmHeaderRow, out secondKmHeaderCol);
@@ -541,24 +541,24 @@ namespace exceltojson
             {
                 var worksheet = package.Workbook.Worksheets[0];
 
-                // Process kalkış data if first km header is found
+                // Process kalkÃ½Ã¾ data if first km header is found
                 if (firstKmHeaderCol != -1)
                 {
-                    ProcessColumnData(worksheet, firstKmHeaderRow, firstKmHeaderCol, resultsKalkış, kalkışListesi, "kalkış");
+                    ProcessColumnData(worksheet, firstKmHeaderRow, firstKmHeaderCol, resultsKalkÃ½Ã¾, kalkÃ½Ã¾Listesi, "kalkÃ½Ã¾");
                 }
                 else
                 {
-                    Console.WriteLine("First 'km' header not found for kalkış table.");
+                    Console.WriteLine("First 'km' header not found for kalkÃ½Ã¾ table.");
                 }
 
-                // Process varış data if second km header is found
+                // Process varÃ½Ã¾ data if second km header is found
                 if (secondKmHeaderCol != -1)
                 {
-                    ProcessColumnData(worksheet, secondKmHeaderRow, secondKmHeaderCol, resultsVarış, varışListesi, "varış");
+                    ProcessColumnData(worksheet, secondKmHeaderRow, secondKmHeaderCol, resultsVarÃ½Ã¾, varÃ½Ã¾Listesi, "varÃ½Ã¾");
                 }
                 else
                 {
-                    Console.WriteLine("Second 'km' header not found for varış table.");
+                    Console.WriteLine("Second 'km' header not found for varÃ½Ã¾ table.");
                 }
             }
         }
@@ -585,7 +585,7 @@ namespace exceltojson
             }
 
             // Read data for other columns
-            List<string> columns = new List<string> { "İstasyonlar / Stations", "İst. Arası Yolculuk Süresi", "İstasyon Bekleme Süreleri", "Toplam Yolculuk Süresi", tableName };
+            List<string> columns = new List<string> { "Ãstasyonlar / Stations", "Ãst. ArasÃ½ Yolculuk SÃ¼resi", "Ãstasyon Bekleme SÃ¼releri", "Toplam Yolculuk SÃ¼resi", tableName };
             int totalFilledColumns = CountTotalFilledColumns(worksheet);
 
             for (int i = 0; i < adjacentCols.Length; i++)

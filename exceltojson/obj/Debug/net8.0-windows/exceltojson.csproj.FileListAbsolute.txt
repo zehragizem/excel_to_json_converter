@@ -32,3 +32,4 @@ C:\Users\ptdum\OneDrive\Masaüstü\exceltojson\exceltojson\bin\Debug\net8.0-wind
 C:\Users\ptdum\OneDrive\Masaüstü\exceltojson\exceltojson\bin\Debug\net8.0-windows\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\ptdum\OneDrive\Masaüstü\exceltojson\exceltojson\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 C:\Users\ptdum\OneDrive\Masaüstü\exceltojson\exceltojson\obj\Debug\net8.0-windows\exceltojson.Properties.Resources.resources
+C:\Users\ptdum\OneDrive\Masaüstü\exceltojson\exceltojson\obj\Debug\net8.0-windows\exceltojson.sourcelink.json

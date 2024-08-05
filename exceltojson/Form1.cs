@@ -6,6 +6,7 @@ using System.Xml;
 using OfficeOpenXml;
 using Newtonsoft.Json;
 using Formatting = Newtonsoft.Json.Formatting;
+using System.IO.Packaging;
 
 namespace exceltojson
 {
@@ -98,47 +99,82 @@ namespace exceltojson
 
             try
             {
-                UpdateHeaderPositions(filePath, rowHeadersKalkýþ, rowHeadersVarýþ);
-                int firstKmHeaderRow, firstKmHeaderCol;
-                int secondKmHeaderRow, secondKmHeaderCol;
-                FindKmHeaderPositions(filePath, out firstKmHeaderRow, out firstKmHeaderCol, out secondKmHeaderRow, out secondKmHeaderCol);
-                ReadAndDisplayRowData(filePath, rowHeadersKalkýþ, resultsRowKalkýþ, rowHeadersVarýþ, resultsRowVarýþ);
-                ReadAndDisplayColumnData(filePath, resultsKalkýþ, kalkýþListesi, resultsVarýþ, varýþListesi);
-                var myClassKalkýþ = new MyClass(); // Initialize for kalkýþ
-                var myClassVarýþ = new MyClass(); // Initialize for varýþ
-                var (counter_kalkis, items_kalkis) = countList(kalkýþListesi);
-                var (counter_varis, items_varis) = countList(varýþListesi);
-
-                var result_kalkis = setJson(resultsKalkýþ, "kalkýþ", myClassKalkýþ, items_kalkis, kalkýþListesi, resultsRowKalkýþ, counter_kalkis);
-                string json_kalkis = JsonConvert.SerializeObject(result_kalkis, Formatting.Indented);
-
-                var result_varis = setJson(resultsVarýþ, "varýþ", myClassVarýþ, items_varis, varýþListesi, resultsRowVarýþ, counter_varis);
-                string json_varis = JsonConvert.SerializeObject(result_varis, Formatting.Indented);
-
-                // Save JSON files using SaveFileDialog
-                SaveFileDialog saveFileDialog = new SaveFileDialog
+                if (ProcessExcelFile(filePath))
                 {
-                    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
-                    Title = "Save JSON File"
-                };
 
-                // Save kalkýþ JSON
-                saveFileDialog.FileName = "results_kalkis.json";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    File.WriteAllText(saveFileDialog.FileName, json_kalkis);
+                    UpdateHeaderPositions(filePath, rowHeadersKalkýþ, rowHeadersVarýþ);
+                    int firstKmHeaderRow, firstKmHeaderCol;
+                    int secondKmHeaderRow, secondKmHeaderCol;
+                    FindKmHeaderPositions(filePath, out firstKmHeaderRow, out firstKmHeaderCol, out secondKmHeaderRow, out secondKmHeaderCol);
+                    ReadAndDisplayRowData(filePath, rowHeadersKalkýþ, resultsRowKalkýþ);
+                    ReadAndDisplayRowData(filePath, rowHeadersVarýþ, resultsRowVarýþ);
+                    ReadAndDisplayColumnData(filePath, resultsKalkýþ, kalkýþListesi, resultsVarýþ, varýþListesi);
+                    // Check if any of the lists are null or empty
+                    bool isAnyListEmpty = kalkýþListesi == null || varýþListesi == null ||
+                                          resultsRowKalkýþ == null || resultsRowVarýþ == null ||
+                                          resultsKalkýþ == null || resultsVarýþ == null ||
+                                          !kalkýþListesi.Any() || !varýþListesi.Any() ||
+                                          !resultsRowKalkýþ.Any() || !resultsRowVarýþ.Any() ||
+                                          !resultsKalkýþ.Any() || !resultsVarýþ.Any();
 
+                    if (isAnyListEmpty)
+                    {
+                        MessageBox.Show("Bu Excel uygun formatta deðil.");
+                        textBox1.Text = ""; // TextBox'ý temizler
+                        return; // Exit the method or process if the format is not correct
+                    }
+                    else
+                    {
+                        var myClassKalkýþ = new MyClass(); // Initialize for kalkýþ
+                        var myClassVarýþ = new MyClass(); // Initialize for varýþ
+                        var (counter_kalkis, items_kalkis) = countList(kalkýþListesi);
+                        var (counter_varis, items_varis) = countList(varýþListesi);
+
+                        var result_kalkis = setJson(resultsKalkýþ, "kalkýþ", myClassKalkýþ, items_kalkis, kalkýþListesi, resultsRowKalkýþ, counter_kalkis);
+                        string json_kalkis = JsonConvert.SerializeObject(result_kalkis, Formatting.Indented);
+
+                        var result_varis = setJson(resultsVarýþ, "varýþ", myClassVarýþ, items_varis, varýþListesi, resultsRowVarýþ, counter_varis);
+                        string json_varis = JsonConvert.SerializeObject(result_varis, Formatting.Indented);
+
+                        // Save JSON files using SaveFileDialog
+                        SaveFileDialog saveFileDialog = new SaveFileDialog
+                        {
+                            Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*",
+                            Title = "Save JSON File"
+                        };
+
+                        // Save kalkýþ JSON
+                        saveFileDialog.FileName = "results_kalkis.json";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            try
+                            {
+                                File.WriteAllText(saveFileDialog.FileName, json_kalkis);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Kalkýþ JSON dosyasý kaydedilirken bir hata oluþtu: {ex.Message}");
+                            }
+                        }
+
+                        // Save varýþ JSON
+                        saveFileDialog.FileName = "results_varis.json";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            try
+                            {
+                                File.WriteAllText(saveFileDialog.FileName, json_varis);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Varýþ JSON dosyasý kaydedilirken bir hata oluþtu: {ex.Message}");
+                            }
+                        }
+                        MessageBox.Show("Dosyalar baþarýyla oluþturuldu");
+                        textBox1.Text = ""; // TextBox'ý temizler
+                    }
                 }
-
-                // Save varýþ JSON
-                saveFileDialog.FileName = "results_varis.json";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    File.WriteAllText(saveFileDialog.FileName, json_varis);
-
-                }
-                MessageBox.Show("Dosyalar baþarýyla oluþturuldu");
-                textBox1.Text = ""; // TextBox'ý temizler
+                 
             }
             catch (Exception ex)
             {
@@ -147,15 +183,82 @@ namespace exceltojson
         }
 
 
+        bool ProcessExcelFile(string filePath)
+        {
+            
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    PromptUserToSelectFile();
+                    return false;
+                }
+
+                string extension = Path.GetExtension(filePath).ToLower();
+                if (extension != ".xlsx" && extension != ".xls")
+                {
+                    ShowInvalidFileTypeMessage();
+                    ResetFilePath();
+                    return false;
+                }
+
+                var package = new ExcelPackage(new FileInfo(filePath));
+                var worksheet = package.Workbook.Worksheets[0];
+                if (IsWorksheetEmpty(worksheet))
+                {
+                    ShowEmptyWorksheetMessage();
+                    return false;
+                }
+
+                return true;
+            }
+            
+        
+
+        void PromptUserToSelectFile()
+        {
+            MessageBox.Show("Lütfen bir Excel dosyasý seçin.");
+            openFileDialog1.Filter = "Excel Files|*.xlsx";
+            openFileDialog1.Title = "Excel dosyasýný seçin";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog1.FileName;
+
+                // Dosya yolunu TextBox'a yazdýrýn
+                textBox1.Text = filePath;
+            }
+        }
+
+        void ShowInvalidFileTypeMessage()
+        {
+            MessageBox.Show("Geçersiz dosya türü. Lütfen bir Excel dosyasý seçin.");
+            textBox1.Text = ""; // TextBox'ý temizler
+        }
+
+        void ResetFilePath()
+        {
+            filePath = null; // Reset filePath to prompt for selection again
+        }
+
+        bool IsWorksheetEmpty(ExcelWorksheet worksheet)
+        {
+            return worksheet.Dimension == null || worksheet.Dimension.Rows <= 1 || worksheet.Dimension.Columns <= 1;
+        }
+
+        void ShowEmptyWorksheetMessage()
+        {
+            MessageBox.Show("Bu Excel dosyasý boþ.");
+            textBox1.Text = ""; // TextBox'ý temizler
+        }
 
         static ResultsCombine setJson(Dictionary<string, List<string>> results, string result_key, MyClass myClass, int items, List<List<string>> liste, Dictionary<string, List<string>> resultsRow, int counter)
         {
 
-
+            
             foreach (var result in results)
             {
                 if (result.Key != result_key)
                 {
+                    
                     switch (result.Key)
                     {
                         case "km":
@@ -176,6 +279,8 @@ namespace exceltojson
                     }
                 }
             }
+
+           
 
             myClass.MyList = new List<MyList>();
             int index = 0;
@@ -284,33 +389,37 @@ namespace exceltojson
 
                 int firstTableEndRow = 0;
                 bool foundFirstTableEnd = false;
+               
 
-                for (int row = 1; row <= worksheet.Dimension.Rows; row++)
-                {
-                    for (int col = 1; col <= worksheet.Dimension.Columns; col++)
+               
+
+                    for (int row = 1; row <= worksheet.Dimension.Rows; row++)
                     {
-                        string cellValue = worksheet.Cells[row, col].Text;
-
-                        // Update positions for 'kalkýþ' headers
-                        if (rowHeadersKalkýþ.ContainsKey(cellValue) && rowHeadersKalkýþ[cellValue].Count == 0)
+                        for (int col = 1; col <= worksheet.Dimension.Columns; col++)
                         {
-                            rowHeadersKalkýþ[cellValue].Add(row);
-                            rowHeadersKalkýþ[cellValue].Add(col);
-                        }
+                            string cellValue = worksheet.Cells[row, col].Text;
 
-                        // If first table end is not yet found, mark it and switch to second table headers
-                        if (rowHeadersKalkýþ.Values.All(v => v.Count > 1) && !foundFirstTableEnd)
-                        {
-                            firstTableEndRow = row;
-                            foundFirstTableEnd = true;
-                        }
+                            // Update positions for 'kalkýþ' headers
+                            if (rowHeadersKalkýþ.ContainsKey(cellValue) && rowHeadersKalkýþ[cellValue].Count == 0)
+                            {
+                                rowHeadersKalkýþ[cellValue].Add(row);
+                                rowHeadersKalkýþ[cellValue].Add(col);
+                            }
 
-                        // Update positions for 'varýþ' headers only after the end of the first table
-                        if (foundFirstTableEnd && rowHeadersVarýþ.ContainsKey(cellValue) && rowHeadersVarýþ[cellValue].Count == 0)
-                        {
-                            rowHeadersVarýþ[cellValue].Add(row);
-                            rowHeadersVarýþ[cellValue].Add(col);
-                        }
+                            // If first table end is not yet found, mark it and switch to second table headers
+                            if (rowHeadersKalkýþ.Values.All(v => v.Count > 1) && !foundFirstTableEnd)
+                            {
+                                firstTableEndRow = row;
+                                foundFirstTableEnd = true;
+                            }
+
+                            // Update positions for 'varýþ' headers only after the end of the first table
+                            if (foundFirstTableEnd && rowHeadersVarýþ.ContainsKey(cellValue) && rowHeadersVarýþ[cellValue].Count == 0)
+                            {
+                                rowHeadersVarýþ[cellValue].Add(row);
+                                rowHeadersVarýþ[cellValue].Add(col);
+                            }
+                       
                     }
                 }
             }
@@ -375,17 +484,16 @@ namespace exceltojson
 
         static void ReadAndDisplayRowData(
             string filePath,
-            Dictionary<string, List<int>> rowHeadersKalkýþ,
-            Dictionary<string, List<string>> resultsRowKalkýþ,
-            Dictionary<string, List<int>> rowHeadersVarýþ,
-            Dictionary<string, List<string>> resultsRowVarýþ)
+            Dictionary<string, List<int>> rowHeaders,
+            Dictionary<string, List<string>> resultsRow
+            )
         {
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 var worksheet = package.Workbook.Worksheets[0];
 
                 // Process kalkýþ table
-                foreach (var header in rowHeadersKalkýþ)
+                foreach (var header in rowHeaders)
                 {
                     if (header.Value.Count == 2)
                     {
@@ -397,7 +505,7 @@ namespace exceltojson
                         while (targetCol <= totalFilledColumns + 1)
                         {
                             string cellValue = worksheet.Cells[row, targetCol].Text;
-                            resultsRowKalkýþ[header.Key].Add(!string.IsNullOrEmpty(cellValue) ? cellValue : "null");
+                            resultsRow[header.Key].Add(!string.IsNullOrEmpty(cellValue) ? cellValue : "null");
                             targetCol++;
                         }
 
@@ -405,26 +513,7 @@ namespace exceltojson
                     }
                 }
 
-                // Process varýþ table
-                foreach (var header in rowHeadersVarýþ)
-                {
-                    if (header.Value.Count == 2)
-                    {
-                        int row = header.Value[0];
-                        int startCol = header.Value[1];
-                        int targetCol = startCol + 7;
-                        int totalFilledColumns = CountTotalFilledColumns(worksheet);
-
-                        while (targetCol <= totalFilledColumns + 1)
-                        {
-                            string cellValue = worksheet.Cells[row, targetCol].Text;
-                            resultsRowVarýþ[header.Key].Add(!string.IsNullOrEmpty(cellValue) ? cellValue : "null");
-                            targetCol++;
-                        }
-
-                        Console.WriteLine($"Processed varýþ header: {header.Key}");
-                    }
-                }
+               
             }
         }
 

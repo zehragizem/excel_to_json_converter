@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("exceltojson")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7296df32c7f023b5d3d5bed5cd4f922bd10db4bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("exceltojson")]
 [assembly: System.Reflection.AssemblyTitleAttribute("exceltojson")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
